@@ -1,7 +1,9 @@
 module Api
     class ContactsController < ApplicationController
 
+        protect_from_forgery with: :null_session
         before_action :set_contact, only: [:show, :update, :destroy, :changes]    
+
         
         def changes            
             # These instance variables are set from the view dynamicaly as the view 
@@ -35,7 +37,7 @@ module Api
         end
     
         def show
-            render json: ContactSerializer.new(contact).serialized_json 
+            render json: ContactSerializer.new(@contact).serialized_json 
         end
     
         def index
@@ -55,24 +57,24 @@ module Api
     
     
         def update
-            if contact.update(contact_params)                
-                render json: ContactSerializer.new(contact).serialized_json                
+            if @contact.update(contact_params)                
+                render json: ContactSerializer.new(@contact).serialized_json                
             else
-                render json: {error: contact.errors.messages}, status: 422
+                render json: {error: @contact.errors.messages}, status: 422
             end
         end
     
         def destroy
-            if contact.destroy
+            if @contact.destroy
                 head :no_content
             else
-                render json: {error: contact.errors.messages}, status: 422
+                render json: {error: @contact.errors.messages}, status: 422
             end
         end
     
         private
         def set_contact
-            contact = Contact.find(params[:id]) 
+            @contact = Contact.find(params[:id]) 
         end
     
         def contact_params
