@@ -74,7 +74,6 @@ module Api
 
                  
                 @contact_edited = ChangedContact.new(@current_id, @current_first_name, @current_last_name, @current_email, @current_phone_number, @current_timestamp)
-
                 @contact_edited_array.append(@contact_edited)                
             end
 
@@ -115,6 +114,7 @@ module Api
         end
     
         def destroy
+
             if @contact.destroy
                 head :no_content
             else
@@ -124,7 +124,11 @@ module Api
     
         private
         def set_contact
-            @contact = Contact.find(params[:id]) 
+            begin
+                @contact = Contact.find(params[:id])
+            rescue => e
+                render json: {error: e}, status: 404
+            end
         end
     
         def contact_params
