@@ -5,18 +5,7 @@ module Api
         before_action :set_contact, only: [:show, :update, :destroy, :changes]    
 
         
-        def changes            
-            # These instance variables are set from the view dynamicaly as the view 
-            # iterates over the @changes hash and are used to display all fields of 
-            # 'History of edits' in the contacts/id/changes route
-            # This is done because the audits table only holds the editted fields 
-            # while I want to display all fields (changed and unchanged)
-            @current_first_name=""
-            @current_last_name=""
-            @current_email=""
-            @current_phone_number=""
-            @current_timestamp=""
-    
+        def changes               
             number_of_audits = @contact.audits.length
             @audits = @contact.audits.take(number_of_audits) 
     
@@ -34,6 +23,65 @@ module Api
                 @changes["created_at"] = @audits[index].created_at
                 @all_changes.append(@changes)
             end
+
+            # These instance variables are set from the view dynamicaly as the view 
+            # iterates over the @changes hash and are used to display all fields of 
+            # 'History of edits' in the contacts/id/changes route
+            # This is done because the audits table only holds the editted fields 
+            # while I want to display all fields (changed and unchanged)
+            @current_first_name=""
+            @current_last_name=""
+            @current_email=""
+            @current_phone_number=""
+            @current_timestamp=""
+            
+            @contact_edited_array=[]
+
+            @all_changes.each do |hash|
+                hash.each do |key,value|
+                    if not value.kind_of?(Array) 
+                        if key=="first_name"
+                            @current_first_name=value 
+                        elsif key=="last_name" 
+                            @current_last_name=value 
+                        elsif key=="email" 
+                            @current_email=value 
+                        elsif key=="phone_number" 
+                            @current_phone_number=value 
+                        elsif key=="created_at" 
+                            @current_timestamp=value     
+                        end                                   
+                    elsif value.length() ==2 
+                        if key=="first_name" 
+                            @current_first_name=value[1] 
+                        elsif key=="last_name" 
+                            @current_last_name=value[1] 
+                        elsif key=="email" 
+                            @current_email=value[1] 
+                        elsif key=="phone_number" 
+                            @current_phone_number=value[1] 
+                        elsif key=="created_at" 
+                            @current_timestamp=value                                         
+                        end
+                    end
+                end
+                #here i make the object
+                #contact_edited = Contact.new(params.require(:contact).permit(:first_name, :last_name, :email, :phone_number) )
+                @contact_edited = Contact.new
+                @contact_edited.first_name=@current_first_name
+                @contact_edited.last_name=@current_last_name
+                @contact_edited.email=@current_email
+                @contact_edited.phone_number=@current_phone_number
+
+                @contact_edited_array.append(@contact_edited)                
+            end
+
+            if @all_changes.length > 0
+                render json: JSON.generate(@contact_edited_array)       
+            else
+                render json: {error: contact.errors.messages}, status: 422
+            end
+
         end
     
         def show
