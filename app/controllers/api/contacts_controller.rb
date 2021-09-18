@@ -21,6 +21,7 @@ module Api
             (0..number_of_audits-1).each do | index |            
                 @changes = @audits[index].audited_changes
                 @changes["created_at"] = @audits[index].created_at
+                @changes["id"] = @audits[index].id
                 @all_changes.append(@changes)
             end
 
@@ -34,6 +35,7 @@ module Api
             @current_email=""
             @current_phone_number=""
             @current_timestamp=""
+            @current_id=""
             
             @contact_edited_array=[]
 
@@ -49,7 +51,9 @@ module Api
                         elsif key=="phone_number" 
                             @current_phone_number=value 
                         elsif key=="created_at" 
-                            @current_timestamp=value     
+                            @current_timestamp=value
+                        elsif key=="id"
+                            @current_id = value                                 
                         end                                   
                     elsif value.length() ==2 
                         if key=="first_name" 
@@ -61,23 +65,21 @@ module Api
                         elsif key=="phone_number" 
                             @current_phone_number=value[1] 
                         elsif key=="created_at" 
-                            @current_timestamp=value                                         
+                            @current_timestamp=value     
+                        elsif key=="id"
+                            @current_id = value                                    
                         end
                     end
                 end
-                #here i make the object
-                #contact_edited = Contact.new(params.require(:contact).permit(:first_name, :last_name, :email, :phone_number) )
-                @contact_edited = Contact.new
-                @contact_edited.first_name=@current_first_name
-                @contact_edited.last_name=@current_last_name
-                @contact_edited.email=@current_email
-                @contact_edited.phone_number=@current_phone_number
+
+                 
+                @contact_edited = ChangedContact.new(@current_id, @current_first_name, @current_last_name, @current_email, @current_phone_number, @current_timestamp)
 
                 @contact_edited_array.append(@contact_edited)                
             end
 
             if @all_changes.length > 0
-                render json: JSON.generate(@contact_edited_array)       
+                render json: ChangedContactSerializer.new(@contact_edited_array).serialized_json   
             else
                 render json: {error: contact.errors.messages}, status: 422
             end
