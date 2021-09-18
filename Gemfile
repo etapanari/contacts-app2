@@ -43,3 +43,12 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# for the email validation
+gem 'email_validator'  
+
+#for auditing contact edits
+gem 'audited', '~> 5.0'
+
+# for the API
+gem 'fast_jsonapi'
