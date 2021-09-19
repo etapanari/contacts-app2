@@ -38,6 +38,10 @@ const ContactNew = () => {
         })
     }
 
+    const handleCancel = (e) => {
+        history.push('/')
+    }
+
     return(
         <div>
             <h1 className="header">
@@ -59,6 +63,7 @@ const ContactNew = () => {
                     </div>
                     <br/>
                     <button className="button" type="submit">Save</button>
+                    <button className="button" onClick={handleCancel} type="submit">Cancel</button>
                 </form>
             </div>
         </div>

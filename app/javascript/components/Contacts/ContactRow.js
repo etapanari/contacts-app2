@@ -43,7 +43,7 @@ const ContactRow = (props) => {
                 <Link className="button" to={`/contacts/${props.item.id}/edit`}>Edit</Link>
             </td>
             <td className="contact-cell">
-                <a className="button" onClick={ () => handleDelete(props.item.id) }>Delete</a>
+                <a className="button" onClick={() => handleDelete(props.item.id)}>Delete</a>
             </td>
             <td className="contact-cell">
                 <Link className="button" to={`/contacts/${props.item.id}/changes`}>Changes History</Link>  

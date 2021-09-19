@@ -33,7 +33,7 @@ const ContactChanges = (props) => {
     return (
         <div>
             <div className="header">
-                <h1>History of Contact Edits</h1>
+                <h1>History of Edits</h1>
             </div>
             <table>
                 <thead>
@@ -51,7 +51,8 @@ const ContactChanges = (props) => {
             </table>
 
             <br/>
-            <Link className="button" to={"/contacts/new"}>Create New</Link>
+            <Link className="button" to={"/contacts/" + props.match.params.id}>Current Contact</Link>
+            <Link className="button" to={"/"}>Return to Contacts</Link>
         </div>
     )
 }
