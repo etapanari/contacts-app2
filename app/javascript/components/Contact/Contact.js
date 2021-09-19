@@ -61,7 +61,7 @@ const Contact = (props) => {
                     <Link className="button" to={"/contacts/" + contact.data.id + "/edit"}>Edit</Link>
                     <a className="button" onClick={ () => handleDelete(contact.data.id) }>Delete</a>
                     <Link className="button" to={"/"}>Return to Contacts</Link>
-                    <Link className="button" to={"/contacts/" + contact.data.id + "/changes"}>History of edits</Link>  
+                    <Link className="button" to={"/contacts/" + contact.data.id + "/changes"}>Changes History</Link>  
                 </div>
             }
         </div>
