@@ -30,21 +30,17 @@ const ContactEdit = (props) => {
         console.log('newContact:', contact)
     }
     
-    const handleSubmit = (contactId) => {
-        contactId.preventDefault()
-        console.log("contactId: ", contactId)
+    const handleSubmit = (e) => {
+        e.preventDefault()
         const csrfToken = document.querySelector('[name=csrf-token]').content
         axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
-        debugger
         axios.patch('/api/v1/contacts/' + props.match.params.id, {contact})
         .then(resp => {
-            debugger
             console.log(resp)
             // Redirect to page
             history.push('/contacts/' + resp.data.data.id)
         })
         .catch(error => {
-            debugger
             var errorsString = ""
             // iterating error response: https://stackoverflow.com/a/54603766/11158950
             // building an error string to be shown as alert
