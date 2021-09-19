@@ -1,5 +1,6 @@
 import React, { useState, setContacts, useEffect, Fragment } from "react";
 import axios from 'axios'
+import ContactRow from './ContactRow'
 
 const Contacts = () => {
     const [contacts, setContacts] = useState([])
@@ -9,20 +10,41 @@ const Contacts = () => {
         // update contacts in our state
         axios.get('/api/v1/contacts')
         .then( resp => {
+            console.log(resp)
             setContacts(resp.data.data)
         })
         .catch( resp => console.log(resp) )
     }, [contacts.length]) // whenever the contact length changes the use Effect will be recalled to render the updated data in the screen
 
-    const list = contacts.map( item => {
-        return (<li key={item.attributes.first_name}>{item.attributes.first_name}</li>)
+    const table_body = contacts.map( item => {
+        return (
+            <ContactRow
+                key={item.id}
+                attributes={item.attributes}
+            />
+        )
     })
 
     return (
-        <Fragment>
-            <div>This is the contacts#show view of the app</div>            
-            <ul>{list}</ul>
-        </Fragment>
+        <div className="home">
+            <div className="header">
+                <h1>Contacts</h1>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Email</th>
+                        <th>Phone number</th>
+                        <th colSpan="4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {table_body}
+                </tbody>
+            </table>
+        </div>
     )
 }
 
