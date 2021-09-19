@@ -5,7 +5,7 @@ import axios from "axios";
 const ContactEdit = (props) => {
     const history = useHistory();
     const [contact, setContact] = useState({});
-    const [newContact, setNewContact] = useState({});
+    // const [newContact, setNewContact] = useState({});
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
@@ -26,8 +26,8 @@ const ContactEdit = (props) => {
         e.preventDefault()
         // Constructing the new contact json object details for the PATCH method and 
         // storing it as newContact in State
-        setContact(Object.assign({}, newContact, {[e.target.name]: e.target.value}))
-        console.log('newContact:', contact)
+        setContact(Object.assign({}, contact, {[e.target.name]: e.target.value}))
+        console.log('contact:', contact)
     }
     
     const handleSubmit = (e) => {

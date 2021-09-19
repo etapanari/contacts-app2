@@ -20,7 +20,7 @@ const Contact = (props) => {
             setLoaded(true)
         })
         .catch( error => console.log(error) )
-    }, []) // whenever the contact changes the use Effect will be recalled to render the updated data in the screen
+    }, []) // useEffect will only load once due to empty array []
     
     const handleDelete = (contactId) => {       
         const csrfToken = document.querySelector('[name=csrf-token]').content

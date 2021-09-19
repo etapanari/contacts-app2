@@ -4,7 +4,7 @@ import Contacts from './Contacts/Contacts'
 import Contact from './Contact/Contact'
 import ContactNew from './ContactNew/ContactNew'
 import ContactEdit from './ContactEdit/ContactEdit'
-
+import ContactChanges from './ContactChanges/ContactChanges'
 
 const App = () => {
     return (
@@ -13,7 +13,7 @@ const App = () => {
             <Route exact path="/contacts/new" component={ContactNew} />
             <Route exact path="/contacts/:id" component={Contact} />
             <Route exact path="/contacts/:id/edit" component={ContactEdit} />
-            {/* <Route exact path="/contacts/:id/changes" component={ContactChanges} /> */}
+            <Route exact path="/contacts/:id/changes" component={ContactChanges} />
         </Switch>
     )
 }

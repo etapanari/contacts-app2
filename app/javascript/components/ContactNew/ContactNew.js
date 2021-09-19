@@ -12,7 +12,7 @@ const ContactNew = () => {
         e.preventDefault()
         // Constructing the contact json object for the POST method and storing it as contact in State
         setContact(Object.assign({}, contact, {[e.target.name]: e.target.value}))
-        //console.log('contact:', contact)
+        console.log('contact:', contact)
     }
     
     const handleSubmit = (e) => {
