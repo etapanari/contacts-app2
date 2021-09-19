@@ -23,6 +23,7 @@ const ContactNew = () => {
         axios.post('/api/v1/contacts', {contact})
         .then(resp => {
             console.log(resp)
+            // Redirect to page
             history.push('/contacts/' + resp.data.data.id)
         })
         .catch(error => {

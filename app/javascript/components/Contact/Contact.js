@@ -19,17 +19,16 @@ const Contact = (props) => {
             setContact(resp.data)
             setLoaded(true)
         })
-        .catch( resp => console.log(resp) )
+        .catch( error => console.log(error) )
     }, []) // whenever the contact changes the use Effect will be recalled to render the updated data in the screen
-
-
     
-    const handleDelete = (id) => {       
+    const handleDelete = (contactId) => {       
         const csrfToken = document.querySelector('[name=csrf-token]').content
         axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
-        axios.delete('/api/v1/contacts/' + id)
+        axios.delete('/api/v1/contacts/' + contactId)
         .then(resp => {
             console.log(resp)
+            // Redirect to page
             history.push('/')
         })
         .catch(error => {
@@ -51,6 +50,7 @@ const Contact = (props) => {
             <div className="header">
                 <h1>Contact</h1>                
             </div>
+            {/* div will not be rendered until data is loaded in state */}
             { loaded &&
                 <div>
                     <p><strong>First name: </strong>{contact.data.attributes.first_name}</p>
