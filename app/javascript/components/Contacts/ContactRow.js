@@ -10,10 +10,10 @@ const ContactRow = (props) => {
             <td className="contact-cell">{props.item.attributes.phone_number}</td>
 
             <td className="contact-cell">
-            <Link to={`/contacts/${props.item.id}`}>Show</Link>
+                <Link to={`/contacts/${props.item.id}`}>Show</Link>
             </td>
             <td className="contact-cell">
-                <Link to={`/contacts/${props.item.id}`}>Edit</Link>
+                <Link to={`/contacts/${props.item.id}/edit`}>Edit</Link>
             </td>
             <td className="contact-cell">Delete</td>
             <td className="contact-cell">History of edits</td>

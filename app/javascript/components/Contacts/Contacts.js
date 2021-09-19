@@ -1,8 +1,11 @@
 import React, { useState, setContacts, useEffect, Fragment } from "react";
 import axios from 'axios'
 import ContactRow from './ContactRow'
+import { Link } from "react-router-dom"
 
 const Contacts = () => {
+
+    //setting a contacts obj in the state
     const [contacts, setContacts] = useState([])
 
     useEffect(() => {
@@ -26,8 +29,8 @@ const Contacts = () => {
     })
 
     return (
-        <div className="home">
-            <div className="homeHeader">
+        <div>
+            <div className="header">
                 <h1>Contacts</h1>
             </div>
             <table>
@@ -44,6 +47,9 @@ const Contacts = () => {
                     {table_body}
                 </tbody>
             </table>
+
+            <br/>
+            <Link className="button" to={"/contacts/new"}>Create New</Link>
         </div>
     )
 }

@@ -1,8 +1,11 @@
 import React, { useState, setContacts, useEffect, Fragment } from "react";
 import axios from 'axios'
+import { Link } from "react-router-dom"
+import { useHistory } from "react-router";
 
 
 const Contact = (props) => {
+    const history = useHistory();
     const [contact, setContact] = useState({})
     const [loaded, setLoaded] = useState(false)
 
@@ -19,6 +22,29 @@ const Contact = (props) => {
         .catch( resp => console.log(resp) )
     }, []) // whenever the contact changes the use Effect will be recalled to render the updated data in the screen
 
+
+    
+    const handleDelete = (id) => {       
+        const csrfToken = document.querySelector('[name=csrf-token]').content
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+        axios.delete('/api/v1/contacts/' + id)
+        .then(resp => {
+            console.log(resp)
+            history.push('/')
+        })
+        .catch(error => {
+            console.log(error)
+            var errorsString = ""
+            // iterating error response: https://stackoverflow.com/a/54603766/11158950
+            // building an error string to be shown as alert
+            for (const key of Object.keys(error.response.data.error)) {
+                console.log(key, error.response.data.error[key]);
+                errorsString = errorsString + "\n" + key + ": " + error.response.data.error[key] + "\n" 
+            }
+            alert(errorsString)
+        })
+    }    
+
     return (
 
         <div>
@@ -32,12 +58,10 @@ const Contact = (props) => {
                     <p><strong>Email: </strong>{contact.data.attributes.email}</p>
                     <p><strong>Phone number: </strong>{contact.data.attributes.phone_number}</p>
 
-                    <p>
-                        Edit
-                        Delete 
-                        Return to Contacts  
-                        History of edits  
-                    </p>
+                    <Link className="button" to={"/contacts/" + contact.data.id + "/edit"}>Edit</Link>
+                    <a className="button" onClick={ () => handleDelete(contact.data.id) }>Delete</a>
+                    <Link className="button" to={"/"}>Return to Contacts</Link>
+                    <Link className="button" to={"/contacts/" + contact.data.id + "/changes"}>History of edits</Link>  
                 </div>
             }
         </div>
