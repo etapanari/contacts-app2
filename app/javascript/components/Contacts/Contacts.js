@@ -7,10 +7,10 @@ const Contacts = () => {
 
     useEffect(() => {
         //get all contacts from the API
-        // update contacts in our state
         axios.get('/api/v1/contacts')
         .then( resp => {
             console.log(resp)
+            // update contacts in our state
             setContacts(resp.data.data)
         })
         .catch( resp => console.log(resp) )
@@ -20,14 +20,14 @@ const Contacts = () => {
         return (
             <ContactRow
                 key={item.id}
-                attributes={item.attributes}
+                item={item}
             />
         )
     })
 
     return (
         <div className="home">
-            <div className="header">
+            <div className="homeHeader">
                 <h1>Contacts</h1>
             </div>
             <table>
