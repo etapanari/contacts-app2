@@ -58,9 +58,10 @@ const ContactEdit = (props) => {
 
     return(
         <div>
-            <h1 className="header">
-                Create New Contact
-            </h1>
+            <div className="header">
+                <h1>Create New Contact</h1>
+            </div>
+            
             {/* div will not be rendered until data is loaded in state */}        
             {loaded &&
                 <div>

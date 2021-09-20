@@ -44,9 +44,10 @@ const ContactNew = () => {
 
     return(
         <div>
-            <h1 className="header">
-                Create New Contact
-            </h1>
+            <div className="header">
+                <h1>Create New Contact</h1>
+            </div>
+            
             <div>
                 <form onSubmit={handleSubmit}>
                     <div>  

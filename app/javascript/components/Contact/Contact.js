@@ -58,10 +58,12 @@ const Contact = (props) => {
                     <p><strong>Email: </strong>{contact.data.attributes.email}</p>
                     <p><strong>Phone number: </strong>{contact.data.attributes.phone_number}</p>
 
-                    <Link className="button" to={"/contacts/" + contact.data.id + "/edit"}>Edit</Link>
-                    <a className="button" onClick={ () => handleDelete(contact.data.id) }>Delete</a>
-                    <Link className="button" to={"/"}>Return to Contacts</Link>
-                    <Link className="button" to={"/contacts/" + contact.data.id + "/changes"}>Changes History</Link>  
+                    <div className="bottomLinks">
+                        <Link className="button" to={"/contacts/" + contact.data.id + "/edit"}>Edit</Link>
+                        <a className="button" onClick={ () => handleDelete(contact.data.id) }>Delete</a>
+                        <Link className="button" to={"/"}>Return to Contacts</Link>
+                        <Link className="button" to={"/contacts/" + contact.data.id + "/changes"}>Changes History</Link>  
+                    </div>
                 </div>
             }
         </div>
