@@ -7,10 +7,10 @@ module Api
     
             
             def changes               
-                number_of_audits = @contact.audits.length
-                @audits = @contact.audits.take(number_of_audits) 
-        
-                # @all_changes array will store all the hashes of each audit/edit.
+
+                @audits = @contact.audits
+
+                # @all_changes array will store all the hashes of each audit/edit of a particular contact.
                 # The edits are stored in the audited_changes column of the audits table
                 # as a hash with key being the column name(ie first_name) and value
                 # being a list with 2 elements. list[0] holds the value before edit
@@ -19,10 +19,11 @@ module Api
                 # column of the table but the value of the hash is a string.
                 # I also add to the @changes hash the created_at key-value pair
                 @all_changes = [] 
-                (0..number_of_audits-1).each do | index |            
-                    @changes = @audits[index].audited_changes
-                    @changes["created_at"] = @audits[index].created_at
-                    @changes["id"] = @audits[index].id
+ 
+                @audits.each do |audit|
+                    @changes = audit.audited_changes
+                    @changes["created_at"] = audit.created_at
+                    @changes["id"] = audit.id
                     @all_changes.append(@changes)
                 end
     
